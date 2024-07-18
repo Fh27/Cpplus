@@ -1,4 +1,5 @@
 class Solution {
+
 public:
 void maxxifind(vector<int>& prices,int i,int &minprice,int &maxprof){
     if(i==prices.size()){
