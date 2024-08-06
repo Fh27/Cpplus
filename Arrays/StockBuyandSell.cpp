@@ -5,6 +5,8 @@
             int cost=prices[i]-mini;
             maxi=max(maxi,cost);
             mini=min(mini,prices[i]);
+         
         }
+  
      return maxi ;
     }
