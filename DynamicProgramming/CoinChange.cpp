@@ -1,26 +1,42 @@
-int helper(vector<int>& coins, int amount,vector<int>&dp){
-        if(amount==0) return 0;
-        if(amount<0) return INT_MAX;
-        if(dp[amount]!=-1){
-            return dp[amount];
-        }
-        int mini=INT_MAX;
-        for(int i=0;i<coins.size();i++){
-            int ans=helper(coins,amount-coins[i],dp);
-            if(ans!=INT_MAX){
-                mini=min(mini,1+ans);
-            }
-        }
-        dp[amount]=mini;
-        return mini;
-    }
+class Solution {
+public:
+    // int f(vector<int>& coins, int amount ,int i,vector<vector<int>>&dp){
+    //     if(i==0){
+    //         if(amount%coins[0]==0) return amount/coins[0];
+    //     else{
+    //         return 1e9;
+    //     }
+    //     }
+    //     if(dp[i][amount]!=-1) return dp[i][amount];
+    //     int unpick=0+f(coins,amount,i-1,dp);
+    //     int pick=INT_MAX;
+    //     if(amount>=coins[i]) pick=1+f(coins,amount-coins[i],i,dp);
+    //     return dp[i][amount]=min(pick,unpick);
+    // }
     
     int coinChange(vector<int>& coins, int amount) {
-        vector<int>dp(amount+1,-1);
-        int ans=helper(coins,amount,dp);
-        if(ans==INT_MAX){
+        // int ans=f(coins,amount,n-1,dp);
+        int n=coins.size();
+        vector<vector<int>>dp(n,vector<int>(amount+1,0));
+        for(int t=0;t<=amount;t++){
+            if(t%coins[0]==0)  dp[0][t]=t/coins[0];
+            else{
+                dp[0][t]=1e9;
+            }
+        }
+        for(int i=1;i<n;i++){
+            for(int t=0;t<=amount;t++){
+            int unpick=0+dp[i-1][t];
+            int pick=INT_MAX;
+            if(t>=coins[i])   pick=1+dp[i][t-coins[i]];
+            dp[i][t]=min(pick,unpick);
+            }
+        }
+        int ans=dp[n-1][amount];
+        if(ans>=1e9){
             return -1;
         }else{
             return ans;
         }
     }
+};
