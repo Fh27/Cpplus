@@ -10,6 +10,7 @@
 //         vector<int>dp(n+1,-1);
 //        int ans= helper(n,dp);
 // return ans;
+
         int prev2=0;
         int prev1=1;
     if(n==0){
